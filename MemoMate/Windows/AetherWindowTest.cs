@@ -4,9 +4,9 @@ using ImGuiNET;
 
 namespace MemoMate.Windows;
 
-public class DebugWindow : AetherWindow
+public class AetherWindowTest : AetherWindow
 {
-    public override string Title { get; set; } = "MemoMate Debug Tools";
+    public override string Title { get; set; } = "AetherWindow Test";
     public override ImGuiWindowFlags Flags { get; set; } = ImGuiWindowFlags.NoResize;
 
     public override WindowSizeConstraints SizeConstraints { get; set; }
@@ -21,6 +21,6 @@ public class DebugWindow : AetherWindow
     public override void Draw()
     {
         base.Draw();
-        ImGui.Text("Debug window!");
+        ImGui.Text("Maybe this window works.");
     }
 }

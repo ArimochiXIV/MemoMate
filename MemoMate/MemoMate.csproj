@@ -1,4 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="Dalamud.Plugin.Bootstrap.targets" />
 
     <PropertyGroup>
         <TargetFramework>net7.0-windows</TargetFramework>
@@ -10,23 +11,4 @@
     <ItemGroup>
       <ProjectReference Include="..\AetherLib\AetherLib\AetherLib.csproj" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Reference Include="Dalamud">
-          <HintPath>$(AppData)\XIVLauncher\addon\Hooks\dev\Dalamud.dll</HintPath>
-          <Private>False</Private>
-      </Reference>
-      <Reference Include="ImGui.NET">
-        <HintPath>$(AppData)\XIVLauncher\addon\Hooks\dev\ImGui.NET.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="DalamudPackager" Version="2.1.12" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Data\" />
-    </ItemGroup>
-
 </Project>
