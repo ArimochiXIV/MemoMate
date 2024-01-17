@@ -10,4 +10,10 @@ public class DebugWindow : AetherWindow
     public override ImGuiWindowFlags Flags { get; set; }
     public override WindowSizeConstraints SizeConstraints { get; set; }
     public override bool OnlyOneAllowed { get; set; } = true;
+
+    public override void Draw()
+    {
+        base.Draw();
+        ImGui.Text("Debug window!");
+    }
 }
