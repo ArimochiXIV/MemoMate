@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoMate", "MemoMate\MemoMa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AetherLib", "AetherLib\AetherLib\AetherLib.csproj", "{69CB9647-2545-4828-BBE9-BE21E6AE4DB1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{9C9E43AF-E905-4983-A9A4-FF122113AE58}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{69CB9647-2545-4828-BBE9-BE21E6AE4DB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69CB9647-2545-4828-BBE9-BE21E6AE4DB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69CB9647-2545-4828-BBE9-BE21E6AE4DB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C9E43AF-E905-4983-A9A4-FF122113AE58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C9E43AF-E905-4983-A9A4-FF122113AE58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C9E43AF-E905-4983-A9A4-FF122113AE58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C9E43AF-E905-4983-A9A4-FF122113AE58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
