@@ -1,0 +1,17 @@
+{
+  "Author": "Arimochi",
+  "Name": "MemoMate",
+  "Punchline": "",
+  "Description": "Keep notes on other players. Tracks when you met and last interacted with others.",
+  "ApplicableVersion": "any",
+  "Tags": [
+    "plugin",
+    "memo",
+    "notes",
+    "track",
+    "met",
+    "time",
+    "interact",
+    "players",
+  ]
+}
