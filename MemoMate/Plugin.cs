@@ -1,25 +1,27 @@
-﻿using AetherLib.Plugin;
+﻿using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
-using MemoMate.Windows;
-using AetherLib;
-using AetherLib.GUI.Windows;
-using AetherLib.Logging;
-using AetherLib.Modules;
-using Dalamud.Configuration;
-using Dalamud.Game.Text.SeStringHandling;
+using MemoMate.Commands;
+using MemoMate.Context;
 
 namespace MemoMate;
 
-public class Plugin : AetherPlugin
+public class Plugin : IDalamudPlugin
 {
-    public static PluginConfiguration PluginConfiguration;
-    public static string ConfigDirectory;
-    
-    public Plugin(DalamudPluginInterface pluginInterface) : base(pluginInterface)
+    public Plugin(DalamudPluginInterface pluginInterface)
     {
-        ConfigDirectory = pluginInterface.ConfigDirectory.FullName;
-        PluginConfiguration = pluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
-        PluginConfiguration.Initialize(pluginInterface);
+        Services.Instance = pluginInterface.Create<Services>();
+        Services.Instance.PluginInterface = pluginInterface;
+        Services.Instance.WindowSystem = new WindowSystem("MemoMate");
+        Services.Instance.PluginInterface.UiBuilder.Draw += Services.Instance.WindowSystem.Draw;
 
+        CommandCreator.Initialize();
+        MemoContextAction.Initialize();
+    }
+
+    public void Dispose()
+    {
+        Services.Instance.WindowSystem.RemoveAllWindows();
+        MemoContextAction.Dispose();
+        
     }
 }

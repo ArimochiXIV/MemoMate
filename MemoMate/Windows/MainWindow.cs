@@ -1,37 +1,32 @@
 ﻿using System.Numerics;
-using AetherLib.GUI.Controls;
-using AetherLib.GUI.Windows;
+using Dalamud.Interface.Windowing;
 using ImGuiNET;
-using MemoMate.Windows.Tabs;
 
 namespace MemoMate.Windows;
 
-public class MainWindow : AetherWindow
+public class MainWindow : Window
 {
-    public override string Title { get; set; } = "MemoMate";
-    public override ImGuiWindowFlags Flags { get; set; } = ImGuiWindowFlags.NoResize;
-
-    // TODO: See if these need to be adjusted once GUI is more laid-out.
-    public override WindowSizeConstraints SizeConstraints { get; set; }
-        = new()
-        {
-            MinimumSize = new Vector2(400, 350),
-            MaximumSize = new Vector2(500, 500)
-        };
-
-    private TabPanel tabPanel = new()
+    private static MainWindow _instance;
+    public static MainWindow Instance
     {
-        Tabs = new TabContent[]
+        get
         {
-            new NearbyTab(),
-            new MemosTab(),
-            new SettingsTab(),
+            if (_instance == null)
+            {
+                _instance = new MainWindow();
+                Services.Instance.WindowSystem.AddWindow(_instance);
+            }
+            return _instance;
         }
-    };
-    
+    }
+
+    private MainWindow() : base("MemoMate", ImGuiWindowFlags.NoResize)
+    {
+        Size = new Vector2(515, 415);
+    }
+
     public override void Draw()
     {
-        base.Draw();
-        tabPanel.Draw();
+        ImGui.Text("MainWindow");
     }
 }
