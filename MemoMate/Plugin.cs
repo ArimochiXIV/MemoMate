@@ -1,5 +1,7 @@
-﻿using Dalamud.Plugin;
-using MemoMate.Data;
+﻿using Dalamud.Interface.Windowing;
+using Dalamud.Plugin;
+using MemoMate.Commands;
+using MemoMate.Context;
 
 namespace MemoMate;
 
@@ -9,11 +11,17 @@ public class Plugin : IDalamudPlugin
     {
         Services.Instance = pluginInterface.Create<Services>();
         Services.Instance.PluginInterface = pluginInterface;
-        MigrationRunner.RunMigrations();
+        Services.Instance.WindowSystem = new WindowSystem("MemoMate");
+        Services.Instance.PluginInterface.UiBuilder.Draw += Services.Instance.WindowSystem.Draw;
+
+        CommandCreator.Initialize();
+        MemoContextAction.Initialize();
     }
-    
+
     public void Dispose()
     {
+        Services.Instance.WindowSystem.RemoveAllWindows();
+        MemoContextAction.Dispose();
         
     }
 }
