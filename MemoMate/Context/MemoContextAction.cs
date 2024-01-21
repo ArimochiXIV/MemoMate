@@ -37,6 +37,9 @@ public static class MemoContextAction
     {
         if (args.ObjectWorld == 0)
         Logger.Debug($"Context menu {{Text=\"{args.Text}\", World={args.ObjectWorld}, ID={args.ObjectId:X}}}");
+        
+        // Ignore non-PC
+        if (args.ObjectWorld == 0 || args.ObjectWorld == ushort.MaxValue)
             return;
         args.AddCustomItem(MenuItem);
     }
