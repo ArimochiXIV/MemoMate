@@ -35,12 +35,19 @@ public static class MemoContextAction
 
     private static void DecideAddItem(GameObjectContextMenuOpenArgs args)
     {
-        if (args.ObjectWorld == 0)
         Logger.Debug($"Context menu {{Text=\"{args.Text}\", World={args.ObjectWorld}, ID={args.ObjectId:X}}}");
         
         // Ignore non-PC
         if (args.ObjectWorld == 0 || args.ObjectWorld == ushort.MaxValue)
             return;
+        
+        // Ignore LocalPlayer
+        var localPlayer = Services.Instance.ClientState.LocalPlayer;
+        if (args.ObjectId == localPlayer.ObjectId)
+            return;
+        if (args.Text.TextValue == localPlayer.Name.TextValue && args.ObjectWorld == localPlayer.HomeWorld.Id)
+            return;
+        
         args.AddCustomItem(MenuItem);
     }
 
