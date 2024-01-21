@@ -12,7 +12,7 @@ public class MemoEditor : Window
     private Memo memo;
     private string memoText = string.Empty;
     
-    private MemoEditor() : base("Memo Editor", ImGuiWindowFlags.NoResize)
+    private MemoEditor() : base("Memo Editor", ImGuiWindowFlags.NoResize | ImGuiWindowFlags.AlwaysAutoResize)
     {
         if (Instance != null)
         {
@@ -46,7 +46,7 @@ public class MemoEditor : Window
         WindowName = $"Memo Editor [{memo.Name}]";
 
         ImGui.Text($"Custom Memo:");
-        ImGui.InputTextMultiline("###memo-editor", ref memoText, 1000, new Vector2(300, 125));
+        ImGui.InputTextMultiline("###memo-editor", ref memoText, 1000, new Vector2(350, 100));
         if (ImGui.Button("Save Memo"))
             SaveMemo();
     }
