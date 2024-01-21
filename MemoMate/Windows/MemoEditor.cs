@@ -11,7 +11,7 @@ public class MemoEditor : Window
 
     private Memo memo;
     private string memoText = string.Empty;
-    private bool isNewOpen = false;
+    private bool isFirstOpen = false;
     
     private MemoEditor() : base("Memo Editor", ImGuiWindowFlags.NoResize | ImGuiWindowFlags.AlwaysAutoResize)
     {
@@ -30,6 +30,7 @@ public class MemoEditor : Window
         if (Instance == null)
         {
             Instance = new MemoEditor();
+            Instance.isFirstOpen = true;
             Services.Instance.WindowSystem.AddWindow(Instance);
         }
 
@@ -39,19 +40,18 @@ public class MemoEditor : Window
         Instance.memo = memo;
         Instance.memoText = memo.MemoText ?? string.Empty;
         Instance.IsOpen = true;
-        Instance.isNewOpen = true;
     }
 
     public override void Draw()
     {
         WindowName = $"Memo Editor [{memo.Name}]";
 
-        if (isNewOpen)
+        if (isFirstOpen)
         {
             var screenSize = ImGui.GetIO().DisplaySize;
             var windowSize = ImGui.GetWindowSize();
             ImGui.SetWindowPos(screenSize / 2 - windowSize / 2);
-            isNewOpen = false;
+            isFirstOpen = false;
         }
         
         ImGui.Text($"Custom Memo:");
