@@ -22,6 +22,5 @@ public class Plugin : IDalamudPlugin
     {
         Services.Instance.WindowSystem.RemoveAllWindows();
         MemoContextAction.Dispose();
-        
     }
 }
