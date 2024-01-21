@@ -36,6 +36,7 @@ public static class MemoContextAction
     private static void DecideAddItem(GameObjectContextMenuOpenArgs args)
     {
         if (args.ObjectWorld == 0)
+        Logger.Debug($"Context menu {{Text=\"{args.Text}\", World={args.ObjectWorld}, ID={args.ObjectId:X}}}");
             return;
         args.AddCustomItem(MenuItem);
     }
