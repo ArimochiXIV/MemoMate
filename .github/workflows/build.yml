@@ -32,7 +32,7 @@ jobs:
         run: |
           Copy-Item "MemoMate/bin/Release" -Destination "Artifact"
       - name: Dump directory
-        run: ls -R .
+        run: ls -laR .
       # - name: Upload Artifacts
       #   uses: actions/upload-artifact@v3
       #   with:
