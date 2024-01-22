@@ -27,13 +27,13 @@ jobs:
           Expand-Archive -Force latest.zip /tmp/dalamud
       - name: Build Plugin
         run: dotnet build -c release
-      - name: Dump directory
-        run: ls -R .
-      - name: Test dir list
-        run: ls
-      - name: Prepare Build Artifact
+      - name: Prepare Build Artifacts
         shell: pwsh
         run: |
-          Copy-Item "MemoMate/bin/Release/MemoMate" -Destination "MemoMate.zip"
-          Expand-Archive -Force MemoMate.zip Artifact
-          
+          Copy-Item "MemoMate/bin/Release" -Destination "Artifact"
+      - name: Dump directory
+        run: ls -R .
+      # - name: Upload Artifacts
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: $
