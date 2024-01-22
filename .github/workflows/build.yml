@@ -41,7 +41,10 @@ jobs:
       - name: Get Assembly Version
         shell: pwsh
         run: |
-          $version = Get-Command("./MemoMate/bin/Release/MemoMate.dll").FileVersionInfo.FileVersion
+          $versionInfo = Get-Command("./MemoMate/bin/Release/MemoMate.dll").FileVersionInfo
+          echo $versionInfo
+          $version = $versionInfo.FileVersion
+          echo $version
           Write-Output "RELEASE_VERSION=$version" >> $env:GITHUB_ENV
           echo $version
       - name: Create Release
