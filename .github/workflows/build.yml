@@ -1,4 +1,5 @@
 # Based on https://github.com/marzent/IINACT/blob/main/.github/workflows/build.yml
+
 name: Plugin Build
 
 on:
@@ -8,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      RELEASE_VERSION: '0.0.0.0'
     steps:
       - uses: actions/checkout@v3
         with:
@@ -23,10 +26,25 @@ jobs:
           Expand-Archive -Force latest.zip /tmp/dalamud
       - name: Build Plugin
         run: dotnet build -c release
-      - name: ls
-        run: ls -lR .
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v3
+      # - name: Upload Artifacts
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: MemoMate
+      #     path: MemoMate/bin/Release/*
+      - name: Make Release Zip
+        shell: pwsh
+        run: |
+          Compress-Archive -Path './MemoMate/bin/Release/*' -DestinationPath './release.zip'
+      - name: Get Assembly Version
+        shell: pwsh
+        run: |
+          $version = Get-Command("./MemoMate/bin/Release/MemoMate.dll").FileVersionInfo.FileVersion
+          Write-Output "RELEASE_VERSION=$version" >> $env:GITHUB_ENV
+          echo $version
+      - name: Create Release
+        if: ${{ env.RELEASE_VERSION != '0.0.0.0' }}
+        uses: softprops/action-gh-release@v1
         with:
-          name: MemoMate
-          path: MemoMate/bin/Release/*
+          files: release.zip
+          name: MemoMate ${{ env.RELEASE_VERSION }}
+          tag_name: release-${{ env.RELEASE_VERSION }}
