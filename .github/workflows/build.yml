@@ -30,6 +30,6 @@ jobs:
       - name: Prepare Build Artifact
         shell: pwsh
         run: |
-          Copy-Item "$Env:PLUGIN_NAME/bin/Release/$Env:PLUGIN_NAME" -Destination "$Env:PLUGIN_NAME.zip"
-          Expand-Archive -Force $Env:PLUGIN_NAME.zip Artifact
+          Copy-Item "MemoMate/bin/Release/MemoMate" -Destination "MemoMate.zip"
+          Expand-Archive -Force MemoMate.zip Artifact
           
