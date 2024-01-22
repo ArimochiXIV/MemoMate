@@ -30,7 +30,7 @@ jobs:
       - name: Prepare Build Artifacts
         shell: pwsh
         run: |
-          Copy-Item "MemoMate/bin/Release/*" -Destination "Artifact" -Recurse
+          Copy-Item -Path "MemoMate/bin/Release/*" -Destination "Artifact" -Recurse
       - name: Dump directory
         run: ls -laR .
       # - name: Upload Artifacts
