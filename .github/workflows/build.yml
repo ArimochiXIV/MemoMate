@@ -41,7 +41,9 @@ jobs:
       - name: Get Assembly Version
         shell: pwsh
         run: |
-          $versionInfo = Get-Command("./MemoMate/bin/Release/MemoMate.dll").FileVersionInfo
+          $command = Get-Command("./MemoMate/bin/Release/MemoMate.dll")
+          echo $command
+          $versionInfo = $command.FileVersionInfo
           echo $versionInfo
           $version = $versionInfo.FileVersion
           echo $version
