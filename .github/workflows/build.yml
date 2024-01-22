@@ -27,6 +27,8 @@ jobs:
           Expand-Archive -Force latest.zip /tmp/dalamud
       - name: Build Plugin
         run: dotnet build -c release
+      - name: ls
+        run: ls -laR .
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
