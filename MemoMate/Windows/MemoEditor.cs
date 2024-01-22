@@ -22,6 +22,7 @@ public class MemoEditor : Window
         }
         
         Instance = this;
+        Instance.isFirstOpen = true;
     }
 
     public static void OpenMemo(string name, uint worldId) => OpenMemo(MemoDb.Get(name, worldId));
@@ -30,7 +31,6 @@ public class MemoEditor : Window
         if (Instance == null)
         {
             Instance = new MemoEditor();
-            Instance.isFirstOpen = true;
             Services.Instance.WindowSystem.AddWindow(Instance);
         }
 
@@ -44,7 +44,7 @@ public class MemoEditor : Window
 
     public override void Draw()
     {
-        WindowName = $"Memo Editor [{memo.Name}]";
+        WindowName = $"Memo Editor [{memo.Name}]###memo-editor";
 
         if (isFirstOpen)
         {
