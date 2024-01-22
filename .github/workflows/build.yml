@@ -1,8 +1,12 @@
+# Based on https://github.com/marzent/IINACT/blob/main/.github/workflows/build.yml
 name: Plugin Build
 
 on:
   push:
     branches: [ "main" ]
+
+env:
+  PLUGIN_NAME: MemoMate
 
 jobs:
   build:
@@ -15,8 +19,16 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 7.0.x
-    #   # - name: Setup .NET
-      #   uses: action/setup-dotnet@v3
-      #   with:
-      #     dotnet-version: 7.0.x
-      
+      - name: Download Dalamud
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/stg/latest.zip -OutFile latest.zip
+          Expand-Archive -Force latest.zip /tmp/dalamud
+      - name: Build Plugin
+        run: dotnet build -c release
+      - name: Prepare Build Artifact
+        shell: pwsh
+        run: |
+          Copy-Item "$PLUGIN_NAME/bin/Release/$PLUGIN_NAME" -Destination "$PLUGIN_NAME.zip"
+          Expand-Archive -Force $PLUGIN_NAME.zip Artifact
+          
