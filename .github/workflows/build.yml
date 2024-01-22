@@ -27,6 +27,8 @@ jobs:
           Expand-Archive -Force latest.zip /tmp/dalamud
       - name: Build Plugin
         run: dotnet build -c release
+      - name: Test dir list
+        run: ls
       - name: Prepare Build Artifact
         shell: pwsh
         run: |
