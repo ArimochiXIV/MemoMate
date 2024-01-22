@@ -1,0 +1,22 @@
+name: Plugin Build
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_VERSION: '0.0.0.0'
+      DALAMUD_HOME: /tmp/dalamud
+      DOTNET_NOLOGO: true
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      # - name: Setup .NET
+      #   uses: action/setup-dotnet@v3
+      #   with:
+      #     dotnet-version: 7.0.x
+      
