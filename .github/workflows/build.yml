@@ -36,6 +36,8 @@ jobs:
         shell: pwsh
         run: |
           Compress-Archive -Path './MemoMate/bin/Release/*' -DestinationPath './release.zip'
+      - name: ls debug
+        run: ls -lR .
       - name: Get Assembly Version
         shell: pwsh
         run: |
