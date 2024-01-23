@@ -16,4 +16,5 @@ Add `https://arimochi.dev/repo.json` to your Dalamud repo list.
 
 ### Planned Features
 
-// TODO
+* Browser for all stored memos.
+* Easier memo management controls.
