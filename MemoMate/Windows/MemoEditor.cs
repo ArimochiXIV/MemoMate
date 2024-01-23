@@ -7,11 +7,14 @@ using ImGuiNET;
 
 public class MemoEditor : Window
 {
+    private const int SavedHintTimeMs = 2000;
     public static MemoEditor Instance { get; private set; }
 
     private Memo memo;
     private string memoText = string.Empty;
     private bool isFirstOpen = false;
+
+    private long lastSaveTime;
     
     private MemoEditor() : base("Memo Editor", ImGuiWindowFlags.NoResize | ImGuiWindowFlags.AlwaysAutoResize)
     {
@@ -58,11 +61,19 @@ public class MemoEditor : Window
         ImGui.InputTextMultiline("###memo-editor", ref memoText, 1000, new Vector2(350, 100));
         if (ImGui.Button("Save Memo"))
             SaveMemo();
+        var timeSinceSave = DateTimeOffset.Now.ToUnixTimeMilliseconds() - lastSaveTime;
+        if (timeSinceSave <= SavedHintTimeMs)
+        {
+            ImGui.SameLine();
+            ImGui.TextColored(new Vector4(0, 1, 0, 1),"Saved Successfully!");
+        }
     }
 
     private void SaveMemo()
     {
         memo.MemoText = memoText;
         MemoDb.Upsert(memo);
+        
+        lastSaveTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
     }
 }
