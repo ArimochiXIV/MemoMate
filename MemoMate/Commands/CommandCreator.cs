@@ -1,4 +1,5 @@
-﻿using Dalamud.Game.ClientState.Objects.Enums;
+﻿using System.Reflection;
+using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.Command;
 using Dalamud.Game.Text.SeStringHandling;
@@ -73,7 +74,16 @@ public static class CommandCreator
         switch (argParts[0])
         {
             case "count":
-                Services.Instance.ChatGui.Print(new SeString(new TextPayload($"Memo Count: {MemoDb.Count()}")), "MemoMate");
+                Services.Instance.ChatGui.Print(
+                    new SeString(new TextPayload($"Memo Count: {MemoDb.Count()}")), 
+                    "MemoMate"
+                );
+                break;
+            case "version":
+                Services.Instance.ChatGui.Print(
+                    new SeString(new TextPayload($"Version {Assembly.GetExecutingAssembly().GetName().Version}")),
+                    "MemoMate"
+                );
                 break;
         }
     }
