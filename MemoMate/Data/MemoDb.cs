@@ -113,4 +113,20 @@ public static class MemoDb
 
         return count;
     }
+
+    public static void Delete(string name, uint worldId)
+    {
+        var stopwatch = new Stopwatch();
+        stopwatch.Start();
+
+        if (Exists(name, worldId))
+        {
+            using var db = new LiteDatabase(ConnectionString);
+            var col = db.GetCollection<MemoModel>("memos");
+            col.Delete(MemoModel.GetId(name, worldId));
+        }
+        
+        stopwatch.Stop();
+        Logger.Debug($"[PERF] {nameof(Count)} - {stopwatch.ElapsedMilliseconds}ms");
+    }
 }
