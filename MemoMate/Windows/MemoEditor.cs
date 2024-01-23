@@ -14,7 +14,7 @@ public class MemoEditor : Window
     private string memoText = string.Empty;
     private bool isFirstOpen = false;
 
-    private Vector2 buttonSize = new(80, 25);
+    private Vector2 buttonSize = new(85, 25);
 
     private long lastSaveTime;
     
@@ -77,6 +77,18 @@ public class MemoEditor : Window
             SaveMemo();
         }
         
+        ImGui.SameLine();
+
+        var ctrlIsHeld = ImGui.IsKeyDown(ImGuiKey.LeftCtrl) || ImGui.IsKeyDown(ImGuiKey.RightCtrl);
+        if (!ctrlIsHeld)
+            ImGui.BeginDisabled();
+        if (ImGui.Button("Delete Memo", buttonSize))
+            DeleteMemo();
+        if (ImGui.IsItemHovered(ImGuiHoveredFlags.AllowWhenDisabled))
+            ImGui.SetTooltip("Hold Ctrl to enable this button.");
+        if (!ctrlIsHeld)
+            ImGui.EndDisabled();
+        
     }
 
     private void SaveMemo()
@@ -85,5 +97,11 @@ public class MemoEditor : Window
         MemoDb.Upsert(memo);
         
         lastSaveTime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+    }
+
+    private void DeleteMemo()
+    {
+        MemoDb.Delete(memo.Name, memo.WorldId);
+        IsOpen = false;
     }
 }
