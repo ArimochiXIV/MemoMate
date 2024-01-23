@@ -16,43 +16,57 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 7.0.x
+
       - name: Download Dalamud
         shell: pwsh
         run: |
           Invoke-WebRequest -Uri https://goatcorp.github.io/dalamud-distrib/stg/latest.zip -OutFile latest.zip
           Expand-Archive -Force latest.zip /tmp/dalamud
+
       - name: Build Plugin
         run: dotnet build -c release
-      # - name: Upload Artifacts
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: MemoMate
-      #     path: MemoMate/bin/Release/*
+
       - name: Make Release Zip
         shell: pwsh
         run: |
           Compress-Archive -Path './MemoMate/bin/Release/*' -DestinationPath './release.zip'
-      - name: ls debug
-        run: ls -lR .
-      - name: Get Assembly Version
+
+      - name: Build repo.json
         shell: pwsh
         run: |
           $command = Get-Command("./MemoMate/bin/Release/MemoMate.dll")
-          echo $command
           $versionInfo = $command.FileVersionInfo
-          echo $versionInfo
           $version = $versionInfo.FileVersion
-          echo $version
           Write-Output "RELEASE_VERSION=$version" >> $env:GITHUB_ENV
-          echo $version
-      - name: Create Release
-        if: ${{ env.RELEASE_VERSION != '0.0.0.0' }}
-        uses: softprops/action-gh-release@v1
-        with:
-          files: release.zip
-          name: MemoMate ${{ env.RELEASE_VERSION }}
-          tag_name: release-${{ env.RELEASE_VERSION }}
+
+          $manifest = Get-Content -Raw './MemoMate/bin/Release/MemoMate.json' | ConvertFrom-Json
+          $manifest | Add-Member -Name "InternalName" -Value $manifest.Name -MemberType NoteProperty
+          $manifest | Add-Member -Name "AssemblyVersion" -Value $version -MemberType NoteProperty
+          $manifest | Add-Member -Name "DownloadLinkInstall" -Value "https://github.com/ArimochiXIV/MemoMate/releases/download/release-$version/release.zip" -MemberType NoteProperty
+          $manifest | ConvertTo-Json | % { "[`n" + $_ + "`n]" } | Set-Content repo.json
+
+          echo $manifest
+
+      # - name: Create Release
+      #   if: ${{ env.RELEASE_VERSION != '0.0.0.0' }}
+      #   uses: softprops/action-gh-release@v1
+      #   with:
+      #     files: release.zip
+      #     name: MemoMate ${{ env.RELEASE_VERSION }}
+      #     tag_name: release-${{ env.RELEASE_VERSION }}
+
+      # - name: Update repo.json on remote.
+      #   if: ${{ env.RELEASE_VERSION != '0.0.0.0' }}
+      #   run: |
+      #     git config --global user.name "Actions User"
+      #     git config --global user.email "actions@github.com"
+      #     git fetch origin main
+      #     git checkout main
+      #     git add repo.json
+      #     git commit -m "[CI] Update repo.json for ${{ env.RELEASE_VERSION }}" || true
+      #     git push origin main
