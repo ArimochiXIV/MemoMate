@@ -1,0 +1,22 @@
+[
+{
+  "Author": "Arimochi",
+  "Name": "MemoMate",
+  "Punchline": "Now you can actually remember people!",
+  "Description": "Keep notes on other players. Tracks when you met and last interacted with others.",
+  "ApplicableVersion": "any",
+  "Tags": [
+    "plugin",
+    "memo",
+    "notes",
+    "track",
+    "met",
+    "time",
+    "interact",
+    "players"
+  ],
+  "InternalName": "MemoMate",
+  "AssemblyVersion": "0.6.0",
+  "DownloadLinkInstall": "https://github.com/ArimochiXIV/MemoMate/releases/download/release-0.6.0/release.zip"
+}
+]
