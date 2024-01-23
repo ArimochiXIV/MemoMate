@@ -10,7 +10,7 @@ public class MemoEditor : Window
     private const int SavedHintTimeMs = 2000;
     public static MemoEditor Instance { get; private set; }
 
-    private Memo memo;
+    private MemoModel memo;
     private string memoText = string.Empty;
     private bool isFirstOpen = false;
 
@@ -31,7 +31,7 @@ public class MemoEditor : Window
     }
 
     public static void OpenMemo(string name, uint worldId) => OpenMemo(MemoDb.Get(name, worldId));
-    public static void OpenMemo(Memo memo)
+    public static void OpenMemo(MemoModel memo)
     {
         if (Instance == null)
         {

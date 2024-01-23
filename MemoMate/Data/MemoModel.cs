@@ -5,7 +5,7 @@ using MemoMate.Reflection;
 
 namespace MemoMate.Data;
 
-public class Memo
+public class MemoModel
 {
     public string Id => GetId(Name, WorldId);
     public string Name { get; set; }

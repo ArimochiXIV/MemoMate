@@ -18,9 +18,9 @@ public static class MemoDb
         stopwatch.Start();
         
         using var db = new LiteDatabase(ConnectionString);
-        var col = db.GetCollection<Memo>("memos");
+        var col = db.GetCollection<MemoModel>("memos");
         
-        var exists = col.Exists(m => m.Id == Memo.GetId(name, worldId));
+        var exists = col.Exists(m => m.Id == MemoModel.GetId(name, worldId));
         Logger.Debug($"Checking existence (\"{name}\", {worldId}) == {exists}");
         
         stopwatch.Stop();
@@ -29,22 +29,22 @@ public static class MemoDb
         return exists;
     }
     
-    public static Memo Get(string name, uint worldId)
+    public static MemoModel Get(string name, uint worldId)
     {
         var stopwatch = new Stopwatch();
         stopwatch.Start();
         Logger.Debug($"Getting record (\"{name}\", {worldId})");
         
         if (!Exists(name, worldId))
-            return new Memo
+            return new MemoModel
             {
                 Name = name,
                 WorldId = worldId,
             };;
         
         using var db = new LiteDatabase(ConnectionString);
-        var col = db.GetCollection<Memo>("memos");
-        var memo = col.FindOne(m => m.Id == Memo.GetId(name, worldId));
+        var col = db.GetCollection<MemoModel>("memos");
+        var memo = col.FindOne(m => m.Id == MemoModel.GetId(name, worldId));
 
         stopwatch.Stop();
         Logger.Debug($"[PERF] {nameof(Get)} - {stopwatch.ElapsedMilliseconds}ms");
@@ -52,7 +52,7 @@ public static class MemoDb
         return memo;
     }
 
-    public static Memo Create(string name, uint worldId)
+    public static MemoModel Create(string name, uint worldId)
     {
         var stopwatch = new Stopwatch();
         stopwatch.Start();
@@ -60,9 +60,9 @@ public static class MemoDb
             return Get(name, worldId);
         
         using var db = new LiteDatabase(ConnectionString);
-        var col = db.GetCollection<Memo>("memos");
+        var col = db.GetCollection<MemoModel>("memos");
         
-        var memo = new Memo
+        var memo = new MemoModel
         {
             Name = name,
             WorldId = worldId,
@@ -76,23 +76,23 @@ public static class MemoDb
         return memo;
     }
 
-    public static void Upsert(Memo memo)
+    public static void Upsert(MemoModel memoModel)
     {
         var stopwatch = new Stopwatch();
         stopwatch.Start();
         
         using var db = new LiteDatabase(ConnectionString);
-        var col = db.GetCollection<Memo>("memos");
+        var col = db.GetCollection<MemoModel>("memos");
 
-        if (Exists(memo.Name, memo.WorldId))
+        if (Exists(memoModel.Name, memoModel.WorldId))
         {
             Logger.Info($"Memo target already exists, updating.");
-            col.Update(memo);
+            col.Update(memoModel);
         }
         else
         {
             Logger.Info($"Memo target doesn't exist, inserting.");
-            col.Insert(memo);
+            col.Insert(memoModel);
         }
         
         stopwatch.Stop();
@@ -105,7 +105,7 @@ public static class MemoDb
         stopwatch.Start();
         
         using var db = new LiteDatabase(ConnectionString);
-        var col = db.GetCollection<Memo>("memos");
+        var col = db.GetCollection<MemoModel>("memos");
         var count = col.Count();
         
         stopwatch.Stop();
