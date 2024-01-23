@@ -66,5 +66,12 @@ jobs:
           git fetch origin main
           git checkout main
           git add repo.json
-          git commit -m "[CI] Update repo.json for ${{ env.RELEASE_VERSION }}" || true
+          git commit -m "[CI] Update repo.json for 6${{ env.RELEASE_VERSION }}" || true
           git push origin main
+
+      - name: Trigger PluginRepo rebuild.
+        run: |
+          curl -X POST https://api.github.com/repos/ArimochiXIV/PluginRepo/dispatches \
+              -H 'Content-Type: application/json' \
+              -H 'Authorization: Bearer ${{ secrets.ACTIONS_KEY }}' \
+              --data '{ "event_type": "MemoMate ${{ env.RELEASE_VERSION }}" }'
