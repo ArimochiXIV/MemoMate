@@ -45,7 +45,8 @@ jobs:
           Write-Output "RELEASE_VERSION=$version" >> $env:GITHUB_ENV
 
           $manifest = Get-Content -Raw './MemoMate/bin/Release/MemoMate.json' | ConvertFrom-Json
-          $manifest | Add-Member -Name "InternalName" -Value $manifest.Name -MemberType NoteProperty
+          # Removed since dev plugins are required to have this.
+          # $manifest | Add-Member -Name "InternalName" -Value $manifest.Name -MemberType NoteProperty
           $manifest | Add-Member -Name "AssemblyVersion" -Value $version -MemberType NoteProperty
           $manifest | Add-Member -Name "DownloadLinkInstall" -Value "https://github.com/ArimochiXIV/MemoMate/releases/download/release-$version/release.zip" -MemberType NoteProperty
           $manifest | ConvertTo-Json | % { "[`n" + $_ + "`n]" } | Set-Content repo.json
