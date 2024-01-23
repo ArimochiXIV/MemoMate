@@ -50,15 +50,13 @@ jobs:
           $manifest | Add-Member -Name "DownloadLinkInstall" -Value "https://github.com/ArimochiXIV/MemoMate/releases/download/release-$version/release.zip" -MemberType NoteProperty
           $manifest | ConvertTo-Json | % { "[`n" + $_ + "`n]" } | Set-Content repo.json
 
-          echo $manifest
-
-      # - name: Create Release
-      #   if: ${{ env.RELEASE_VERSION != '0.0.0.0' }}
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     files: release.zip
-      #     name: MemoMate ${{ env.RELEASE_VERSION }}
-      #     tag_name: release-${{ env.RELEASE_VERSION }}
+      - name: Create Release
+        if: ${{ env.RELEASE_VERSION != '0.0.0.0' }}
+        uses: softprops/action-gh-release@v1
+        with:
+          files: release.zip
+          name: MemoMate ${{ env.RELEASE_VERSION }}
+          tag_name: release-${{ env.RELEASE_VERSION }}
 
       - name: Update repo.json on remote.
         if: ${{ env.RELEASE_VERSION != '0.0.0.0' }}
