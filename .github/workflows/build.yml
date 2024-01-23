@@ -67,7 +67,7 @@ jobs:
           git fetch origin main
           git checkout main
           git add repo.json
-          git commit -m "[CI] Update repo.json for 6${{ env.RELEASE_VERSION }}" || true
+          git commit -m "[CI] Update repo.json for ${{ env.RELEASE_VERSION }}" || true
           git push origin main
 
       - name: Trigger PluginRepo rebuild.
