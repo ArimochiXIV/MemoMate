@@ -60,13 +60,13 @@ jobs:
       #     name: MemoMate ${{ env.RELEASE_VERSION }}
       #     tag_name: release-${{ env.RELEASE_VERSION }}
 
-      # - name: Update repo.json on remote.
-      #   if: ${{ env.RELEASE_VERSION != '0.0.0.0' }}
-      #   run: |
-      #     git config --global user.name "Actions User"
-      #     git config --global user.email "actions@github.com"
-      #     git fetch origin main
-      #     git checkout main
-      #     git add repo.json
-      #     git commit -m "[CI] Update repo.json for ${{ env.RELEASE_VERSION }}" || true
-      #     git push origin main
+      - name: Update repo.json on remote.
+        if: ${{ env.RELEASE_VERSION != '0.0.0.0' }}
+        run: |
+          git config --global user.name "Actions User"
+          git config --global user.email "actions@github.com"
+          git fetch origin main
+          git checkout main
+          git add repo.json
+          git commit -m "[CI] Update repo.json for ${{ env.RELEASE_VERSION }}" || true
+          git push origin main
