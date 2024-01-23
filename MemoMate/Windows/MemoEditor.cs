@@ -14,6 +14,8 @@ public class MemoEditor : Window
     private string memoText = string.Empty;
     private bool isFirstOpen = false;
 
+    private Vector2 buttonSize = new(80, 25);
+
     private long lastSaveTime;
     
     private MemoEditor() : base("Memo Editor", ImGuiWindowFlags.NoResize | ImGuiWindowFlags.AlwaysAutoResize)
@@ -59,14 +61,22 @@ public class MemoEditor : Window
         
         ImGui.Text($"Custom Memo:");
         ImGui.InputTextMultiline("###memo-editor", ref memoText, 1000, new Vector2(350, 100));
-        if (ImGui.Button("Save Memo"))
-            SaveMemo();
-        var timeSinceSave = DateTimeOffset.Now.ToUnixTimeMilliseconds() - lastSaveTime;
-        if (timeSinceSave <= SavedHintTimeMs)
+
+        var inSaveCooldown = DateTimeOffset.Now.ToUnixTimeMilliseconds() - lastSaveTime <= SavedHintTimeMs;
+
+        if (inSaveCooldown)
         {
-            ImGui.SameLine();
-            ImGui.TextColored(new Vector4(0, 1, 0, 1),"Saved Successfully!");
+            ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(0, 1, 0, 1));
+            ImGui.BeginDisabled();
+            ImGui.Button("Saved!", buttonSize);
+            ImGui.EndDisabled();
+            ImGui.PopStyleColor();
         }
+        else if (ImGui.Button("Save Memo", buttonSize))
+        {
+            SaveMemo();
+        }
+        
     }
 
     private void SaveMemo()
