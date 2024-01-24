@@ -127,6 +127,6 @@ public static class MemoDb
         }
         
         stopwatch.Stop();
-        Logger.Debug($"[PERF] {nameof(Count)} - {stopwatch.ElapsedMilliseconds}ms");
+        Logger.Debug($"[PERF] {nameof(Delete)} - {stopwatch.ElapsedMilliseconds}ms");
     }
 }
