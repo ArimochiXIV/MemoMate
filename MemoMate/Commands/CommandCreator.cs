@@ -18,6 +18,11 @@ public static class CommandCreator
             HelpMessage = "Opens the memo editor for the currently-targeted player.",
             ShowInHelp = true
         });
+        Services.Instance.CommandManager.AddHandler("/memochanges", new CommandInfo(OnOpenChangelogWindowCommand)
+        {
+            HelpMessage = "Open MemoMate changelog window.",
+            ShowInHelp = true
+        });
         Services.Instance.CommandManager.AddHandler("/memos", new CommandInfo(OnOpenMainWindowCommand)
         {
             HelpMessage = "Opens the main MemoMate window.",
@@ -60,6 +65,11 @@ public static class CommandCreator
     {
         Services.Instance.ChatGui.Print(new SeString(new TextPayload("Sorry, this command is not yet implemented.")), "MemoMate");
         // MainWindow.Instance.IsOpen = true;
+    }
+
+    private static void OnOpenChangelogWindowCommand(string name, string args)
+    {
+        ChangelogWindow.Instance.IsOpen = true;
     }
     
     private static void OnDidDebugCommand(string name, string args)
